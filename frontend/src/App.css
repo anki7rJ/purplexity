@@ -1,0 +1,4 @@
+@keyframes blink {
+    0%, 100% { background-color: #ef4444; } /* Red */
+    50% { background-color: #eab308; }    /* Yellow */
+  }

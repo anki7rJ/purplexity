@@ -5,12 +5,14 @@ import jwt from "jsonwebtoken"
 export function authMiddleware(req:Request,res:Response,next:NextFunction){
    try {
     const header = req.headers["authorization"]
+    
     let token 
     if(header?.startsWith("Bearer ")){
         token = header.split(" ")[1]
     }else{
         token = header
     }
+    
 
     if(!token){
        return res.status(401).json({

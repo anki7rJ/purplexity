@@ -6,7 +6,7 @@ export const signinSchema = z.object({
 }) 
 export const signupSchema = signinSchema.extend({
     name: z.string().min(4),
-    confirmPassword: z.string
+    confirmPassword: z.string()
 }).refine((data)=>data.password===data.confirmPassword,{
     message:"Password don't match",
     path:["confirmPassword"]

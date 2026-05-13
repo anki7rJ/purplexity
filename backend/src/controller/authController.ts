@@ -1,11 +1,13 @@
 import  { type NextFunction, type Request, type Response } from 'express'
-import { signinSchema , signupSchema } from '../validation/validation.js'
-import { prisma } from '../../db.js'
+import { signinSchema , signupSchema } from '../validation/authValidation'
+import prisma from '../../db';
 import bcrypt from "bcrypt"
 import jwt from 'jsonwebtoken';
 
 export const signup = async (req:Request,res:Response)=>{
+   
     const response = signupSchema.safeParse(req.body)
+    
 
     if(!response.success){
         return res.status(400).json({
