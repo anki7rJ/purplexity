@@ -115,6 +115,12 @@ export default function Authpage( {isSignin}:AuthPageProps ){
           >
             {loading ? "Please wait..." : isSignin ? "Login" : "Create Account"}
           </button>
+
+          {error && (
+            <p className="text-sm font-semibold text-red-400">
+              {error}
+            </p>
+          )}
       
         </form>
       </div>
