@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "prisma generate && tsc && node scripts/copy-prisma-client.cjs",
+    "build": "prisma generate && prisma migrate deploy && tsc && node scripts/copy-prisma-client.cjs",
     "start": "node dist/src/index.js",
     "dev": "npx ts-node --files src/index.ts"
   },
