@@ -29,10 +29,9 @@ export default function Authpage( {isSignin}:AuthPageProps ){
 
             const body = isSignin?{email,password}:{email,password,name,confirmPassword}
 
-            const {data} = await api.post(endpoint,body)
+            await api.post(endpoint,body)
 
             if(isSignin){
-                localStorage.setItem("token",data.token)
                 navigate('/home')
                 
             }else{

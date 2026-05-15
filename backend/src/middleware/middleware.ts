@@ -4,16 +4,8 @@ import jwt from "jsonwebtoken"
 
 export function authMiddleware(req:Request,res:Response,next:NextFunction){
    try {
-    const header = req.headers["authorization"]
+    const token = req.cookies.token
     
-    let token 
-    if(header?.startsWith("Bearer ")){
-        token = header.split(" ")[1]
-    }else{
-        token = header
-    }
-    
-
     if(!token){
        return res.status(401).json({
             status:"false",
@@ -36,7 +28,11 @@ export function authMiddleware(req:Request,res:Response,next:NextFunction){
     next()
     
    } catch (error) {
-    console.error(error)
+    res.status(401).json({
+        status:false,
+        message:"User is Not authorized"
+    })
+    
     
    }
 

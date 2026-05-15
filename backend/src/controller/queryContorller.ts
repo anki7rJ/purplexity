@@ -68,11 +68,11 @@ export const purplexityAsk = async (req:Request,res:Response,next:NextFunction)=
         response_format:{type:"json_object"}
     })
     
-    console.log(llm_response)
+    
     const rawContent = llm_response.choices[0]?.message?.content || "{}"
     
     const parsedData = JSON.parse(rawContent)
-    console.log(`parsedData: ${parsedData}`)
+   
 
 
     res.writeHead(200, { 'Content-Type': 'application/json' });

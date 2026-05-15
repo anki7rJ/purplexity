@@ -46,7 +46,7 @@ export const signup = async (req:Request,res:Response)=>{
            
         })
     } catch (error) {
-        console.error("Signup failed", error)
+        
         return res.status(500).json({
             status:false,
             message:"Unable to create account"
@@ -91,19 +91,49 @@ export const signin = async (req:Request,res:Response,next:NextFunction)=>{
     
         }
     
-        const token = jwt.sign({name:foundUser.name},process.env.JWT_SECRET!,{expiresIn:"1h"})
+        const token = jwt.sign({user_id:foundUser.id},process.env.JWT_SECRET!,{expiresIn:"1h"})
+        res.cookie("token",token,{
+            path:'/',
+            httpOnly:true,
+            secure:process.env.NODE_ENV==="production",
+            sameSite:process.env.NODE_ENV==="production"?"none":"lax",
+            maxAge:60*60*1000
+        })
     
         res.status(200).json({
             status:true,
             message:"User logged in",
-            token
         })
     } catch (error) {
-        console.error("Signin failed", error)
+        
         return res.status(500).json({
             status:false,
             message:"Unable to sign in"
         })
     }
+}
+
+export const logout = (req:Request,res:Response)=>{
+ try {
+     res.clearCookie("token",{
+        path:'/',
+        httpOnly:true,
+        secure:true,
+        sameSite:"none"
+    })
+
+    res.status(200).json({
+        status:true,
+        message:"User Logged out"
+    })
+    
+ } catch (error) {
+    return res.status(500).json({
+            status:false,
+            message:"Unable to LogOut"
+        })
+    
+ }
+
 }
 
