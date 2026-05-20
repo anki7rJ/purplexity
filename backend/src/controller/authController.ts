@@ -91,7 +91,7 @@ export const signin = async (req:Request,res:Response,next:NextFunction)=>{
     
         }
     
-        const token = jwt.sign({user_id:foundUser.id},process.env.JWT_SECRET!,{expiresIn:"1h"})
+        const token = jwt.sign({id:foundUser.id},process.env.JWT_SECRET!,{expiresIn:"1h"})
         res.cookie("token",token,{
             path:'/',
             httpOnly:true,

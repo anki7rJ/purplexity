@@ -5,6 +5,8 @@ import  { tavily } from '@tavily/core'
 import { PROMPT_TEMPLATE ,SYSTEM_PROMPT } from "../prompt/prompt";
 import Groq from "groq-sdk";
 import { parse } from "node:path";
+import prisma from "../../db";
+
 
 
 const client = tavily({apiKey:process.env.TAVILY_API_KEY !})
@@ -19,6 +21,11 @@ export const purplexityAsk = async (req:Request,res:Response,next:NextFunction)=
     
     
     const response = querySchema.safeParse(req.body)
+    const userId = req.user?.id
+    if(!userId){
+        throw new Error("Unauthorized")
+    }
+    
     
     
     
@@ -74,6 +81,18 @@ export const purplexityAsk = async (req:Request,res:Response,next:NextFunction)=
     const parsedData = JSON.parse(rawContent)
    
 
+    await prisma.query.create({
+    data:{
+        query:query,
+        answer:parsedData.answer,
+        followUp:parsedData.followUps,
+        user:{
+            connect:{id:userId}
+        }
+    }
+
+   })
+
 
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({
@@ -88,9 +107,5 @@ export const purplexityAsk = async (req:Request,res:Response,next:NextFunction)=
         console.log(error)
         
     }
-
-
-
-
 
 }

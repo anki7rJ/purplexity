@@ -1,6 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken"
 
+import { CustomUserPayload } from "../types/express";
 
 export function authMiddleware(req:Request,res:Response,next:NextFunction){
    try {
@@ -13,7 +14,7 @@ export function authMiddleware(req:Request,res:Response,next:NextFunction){
         })
     }
 
-    const userVerification = jwt.verify(token!,process.env.JWT_SECRET!)
+    const userVerification = jwt.verify(token!,process.env.JWT_SECRET!) as CustomUserPayload
 
     if(!userVerification){
         return res.status(401).json({
