@@ -120,4 +120,4 @@ The biggest takeaway was understanding that building an AI application involves 
 
 **Ankit Raj**
 
-[GitHub]([https://github.com/anki7rJ]) · [LinkedIn](www.linkedin.com/in/ankitraj-cse)
+[GitHub](https://github.com/anki7rJ) · [LinkedIn](www.linkedin.com/in/ankitraj-cse)
